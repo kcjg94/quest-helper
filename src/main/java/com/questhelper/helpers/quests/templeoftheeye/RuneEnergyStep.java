@@ -35,25 +35,19 @@ import net.runelite.client.eventbus.Subscribe;
 
 public class RuneEnergyStep extends ObjectStep
 {
-	String startText = "The ";
-	String endText = " energy reacts strangely to your touch.";
-
-	String failedText = " energy does not respond to your touch.";
-
 	int currentPos = 0;
 
 	RunicEnergy[] useList = new RunicEnergy[6];
 
 	RunicEnergy[] runicEnergies = new RunicEnergy[]{
-		new RunicEnergy("earth", new WorldPoint(3040, 4834, 0), ObjectID.EARTH_ENERGY),
-		new RunicEnergy("cosmic", new WorldPoint(3041, 4832, 0), ObjectID.COSMIC_ENERGY),
-		new RunicEnergy("death", new WorldPoint(3037, 4832, 0), ObjectID.DEATH_ENERGY),
-		new RunicEnergy("nature", new WorldPoint(3038, 4830, 0), ObjectID.NATURE_ENERGY),
-		new RunicEnergy("law", new WorldPoint(3038, 4834, 0), ObjectID.LAW_ENERGY),
-		new RunicEnergy("fire", new WorldPoint(3040, 4830, 0), ObjectID.FIRE_ENERGY),
+		new RunicEnergy("earth", new WorldPoint(3040, 4834, 0), ObjectID.EARTH_ENERGY, 13747),
+		new RunicEnergy("cosmic", new WorldPoint(3041, 4832, 0), ObjectID.COSMIC_ENERGY, 13748),
+		new RunicEnergy("death", new WorldPoint(3037, 4832, 0), ObjectID.DEATH_ENERGY, 13749),
+		new RunicEnergy("nature", new WorldPoint(3038, 4830, 0), ObjectID.NATURE_ENERGY, 13750),
+		new RunicEnergy("law", new WorldPoint(3038, 4834, 0), ObjectID.LAW_ENERGY, 13751),
+		new RunicEnergy("fire", new WorldPoint(3040, 4830, 0), ObjectID.FIRE_ENERGY, 13752),
 	};
 
-	int highestPointReached = 0;
 	public RuneEnergyStep(QuestHelper questHelper)
 	{
 		super(questHelper, -1,
@@ -74,32 +68,21 @@ public class RuneEnergyStep extends ObjectStep
 	@Override
 	public void onVarbitChanged(VarbitChanged varbitChanged)
 	{
-		super.onVarbitChanged(varbitChanged);
-		setupHighlights();
-	}
-
-
-	@Subscribe
-	public void onChatMessage(ChatMessage chatMessage)
-	{
-		if (chatMessage.getType() == ChatMessageType.GAMEMESSAGE)
+		for (RunicEnergy re : runicEnergies)
 		{
-			if (chatMessage.getMessage().contains(endText))
+			if (varbitChanged.getVarbitId() == re.stateVarbit)
 			{
-				for (RunicEnergy runicEnergy : runicEnergies)
+				if (varbitChanged.getValue() == 2)
 				{
-					if (chatMessage.getMessage().contains(runicEnergy.name))
-					{
-						useList[currentPos] = runicEnergy;
-						currentPos++;
-						setupHighlights();
-					}
+					useList[currentPos] = re;
+					currentPos++;
+					setupHighlights();
 				}
-			}
-			if (chatMessage.getMessage().contains(failedText))
-			{
-				currentPos = 0;
-				setupHighlights();
+				else
+				{
+					currentPos = 0;
+					setupHighlights();
+				}
 			}
 		}
 	}
@@ -112,7 +95,6 @@ public class RuneEnergyStep extends ObjectStep
 		}
 
 		alternateObjectIDs.clear();
-
 		alternateObjectIDs.add(useList[currentPos].id);
 		worldPoint = useList[currentPos].wp;
 

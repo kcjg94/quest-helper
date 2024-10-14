@@ -31,11 +31,13 @@ public class RunicEnergy
 	String name;
 	WorldPoint wp;
 	int id;
+	int stateVarbit;
 
-	public RunicEnergy(String name, WorldPoint wp, int id)
+	public RunicEnergy(String name, WorldPoint wp, int id, int stateVarbit)
 	{
 		this.name = name;
 		this.wp = wp;
 		this.id = id;
+		this.stateVarbit = stateVarbit;
 	}
 }
