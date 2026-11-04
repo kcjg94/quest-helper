@@ -55,6 +55,7 @@ public class SkillFiltering
 			? questHelper.getGeneralRequirements().stream()
 			.filter(QuestRequirement.class::isInstance)
 			.map(QuestRequirement.class::cast)
+			.filter(QuestRequirement::isIncludeSubRequirements)
 			.collect(Collectors.toList())
 			: Collections.emptyList();
 

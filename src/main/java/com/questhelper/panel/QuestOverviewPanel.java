@@ -457,7 +457,10 @@ public class QuestOverviewPanel extends JPanel
 
 				allRequirements.add(requirement);
 
-				collectRequirements(subQuest.getQuest().getQuestHelper(), allRequirements, processedQuestIds);
+				if (subQuest.isIncludeSubRequirements())
+				{
+					collectRequirements(subQuest.getQuest().getQuestHelper(), allRequirements, processedQuestIds);
+				}
 			}
 			else
 			{

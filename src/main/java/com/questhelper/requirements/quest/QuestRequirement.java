@@ -49,6 +49,13 @@ public class QuestRequirement extends AbstractRequirement
 	private String displayText = null;
 
 	/**
+	 * Whether the required quest's own general requirements should be pulled in when
+	 * aggregating requirements (full requirements panel, skill filtering).
+	 * Disable for partial-progress requirements whose quest-wide requirements don't apply.
+	 */
+	private boolean includeSubRequirements = true;
+
+	/**
 	 * Check if a {@link net.runelite.api.Quest} meets the required {@link QuestState}
 	 *
 	 * @param quest         the quest to check
@@ -103,6 +110,17 @@ public class QuestRequirement extends AbstractRequirement
 	{
 		this(quest, minimumVarValue);
 		this.displayText = displayText;
+	}
+
+	/**
+	 * Don't pull in the required quest's own general requirements when aggregating.
+	 *
+	 * @return this requirement
+	 */
+	public QuestRequirement withoutSubRequirements()
+	{
+		this.includeSubRequirements = false;
+		return this;
 	}
 
 	@Override

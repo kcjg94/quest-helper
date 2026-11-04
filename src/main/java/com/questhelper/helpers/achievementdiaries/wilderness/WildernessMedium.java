@@ -200,7 +200,7 @@ public class WildernessMedium extends ComplexStateQuestHelper
 		inSlayer = new ZoneRequirement(slayer);
 
 		betweenARock = new QuestRequirement(QuestHelperQuest.BETWEEN_A_ROCK, QuestState.IN_PROGRESS,
-			"Schematic to make gold helmet in Between a Rock");
+			"Schematic to make gold helmet in Between a Rock").withoutSubRequirements();
 	}
 
 	@Override
