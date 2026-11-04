@@ -110,7 +110,7 @@ public class TempleOfTheEye extends BasicQuestHelper
 		steps.put(10, talkToMage1);
 
 		ConditionalStep fetchHerbertsTea = new ConditionalStep(this, getTeaForMage);
-		fetchHerbertsTea.addStep(new Conditions(strongTea, bucketOfWater, eyeAmulet), talkToMage2);
+		fetchHerbertsTea.addStep(strongTea, talkToMage2);
 		steps.put(15, fetchHerbertsTea);
 
 		steps.put(20, finishTalkToMage2);
@@ -211,7 +211,7 @@ public class TempleOfTheEye extends BasicQuestHelper
 	protected void setupRequirements()
 	{
 		bucketOfWater = new ItemRequirement("Bucket of water", ItemID.BUCKET_WATER);
-		chisel = new ItemRequirement("Chisel", ItemID.CHISEL);
+		chisel = new ItemRequirement("Chisel", ItemCollections.CHISEL);
 		chisel.canBeObtainedDuringQuest();
 		pickaxe = new ItemRequirement("Pickaxe", ItemCollections.PICKAXES);
 		pickaxe.canBeObtainedDuringQuest();

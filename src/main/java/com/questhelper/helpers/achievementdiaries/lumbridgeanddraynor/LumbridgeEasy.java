@@ -186,12 +186,12 @@ public class LumbridgeEasy extends ComplexStateQuestHelper
 		inLumby = new ZoneRequirement(lumby);
 
 		choppedLogs = new ChatMessageRequirement(
-			"<col=0040ff>Achievement Diary Stage Task - Current stage: 1.</col>"
+			"Achievement Diary Stage Task - Current stage: 1."
 		);
 		((ChatMessageRequirement) choppedLogs).setInvalidateRequirement(
 			new ChatMessageRequirement(
 				new Conditions(LogicType.NOR, inLumby),
-				"<col=0040ff>Achievement Diary Stage Task - Current stage: 1.</col>"
+				"Achievement Diary Stage Task - Current stage: 1."
 			)
 		);
 
@@ -271,8 +271,8 @@ public class LumbridgeEasy extends ComplexStateQuestHelper
 		fishAnchovies = new NpcStep(this, NpcID._0_51_49_SALTFISH, new WorldPoint(3267, 3148, 0),
 			"Fish for anchovies in Al-Kharid.", smallFishingNet);
 
-		claimReward = new NpcStep(this, NpcID.HATIUS_LUMBRIDGE_DIARY, new WorldPoint(3235, 3213, 0),
-			"Talk to Hatius Cosaintus in Lumbridge to claim your reward!");
+		claimReward = new NpcStep(this, NpcID.MIKASI_LUMBRIDGE_DIARY, new WorldPoint(3235, 3213, 0),
+			"Talk to Mikasi in Lumbridge to claim your reward!");
 		claimReward.addDialogStep("I have a question about my Achievement Diary.");
 	}
 

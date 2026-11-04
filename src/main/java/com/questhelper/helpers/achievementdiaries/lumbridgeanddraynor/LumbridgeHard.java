@@ -216,12 +216,12 @@ public class LumbridgeHard extends ComplexStateQuestHelper
 
 		madeAmuletU = new ChatMessageRequirement(
 			inLumby,
-			"<col=0040ff>Achievement Diary Stage Task - Current stage: 1.</col>"
+			"Achievement Diary Stage Task - Current stage: 1."
 		);
 		((ChatMessageRequirement) madeAmuletU).setInvalidateRequirement(
 			new ChatMessageRequirement(
 				new Conditions(LogicType.NOR, inLumby),
-				"<col=0040ff>Achievement Diary Stage Task - Current stage: 1.</col>"
+				"Achievement Diary Stage Task - Current stage: 1."
 			)
 		);
 
@@ -315,8 +315,8 @@ public class LumbridgeHard extends ComplexStateQuestHelper
 				"If you're waiting for it to grow and want to complete further tasks, use the tick box on panel.",
 			bellaSeed, rake, spade, gloves, seedDib);
 
-		claimReward = new NpcStep(this, NpcID.HATIUS_LUMBRIDGE_DIARY, new WorldPoint(3235, 3213, 0),
-			"Talk to Hatius Cosaintus in Lumbridge to claim your reward!");
+		claimReward = new NpcStep(this, NpcID.MIKASI_LUMBRIDGE_DIARY, new WorldPoint(3235, 3213, 0),
+			"Talk to Mikasi in Lumbridge to claim your reward!");
 		claimReward.addDialogStep("I have a question about my Achievement Diary.");
 	}
 

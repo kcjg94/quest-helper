@@ -69,6 +69,9 @@ public class BikeShedder extends BasicQuestHelper
 	private ItemRequirement manyCoins;
 	private ObjectStep useCoinOnBush;
 	private ObjectStep useManyCoinsOnBush;
+	private ObjectStep highlightBushWorldPoint;
+	private ObjectStep highlightBushNoWorldPoint;
+	private ObjectStep highlightBushShowAllInArea;
 
 	private ItemRequirement varrockTeleport;
 	private ItemRequirement ardougneTeleport;
@@ -82,6 +85,7 @@ public class BikeShedder extends BasicQuestHelper
 	private DetailedQuestStep conditionalRequirementLookAtCoins;
 	private ItemRequirement conditionalRequirementGoldBar;
 	private WidgetTextRequirement lookAtCooksAssistantRequirement;
+	private WidgetTextRequirement lookAtCooksAssistantTextFinishedRequirement;
 	private DetailedQuestStep lookAtCooksAssistant;
 	private WidgetTextRequirement lookAtCooksAssistantTextRequirement;
 	private ZoneRequirement byStaircaseInSunrisePalace;
@@ -189,6 +193,9 @@ public class BikeShedder extends BasicQuestHelper
 		steps.addStep(new ZoneRequirement(new WorldPoint(3223, 3218, 0)), useLogOnBush);
 		steps.addStep(new ZoneRequirement(new WorldPoint(3222, 3217, 0)), useCoinOnBush);
 		steps.addStep(new ZoneRequirement(new WorldPoint(3223, 3216, 0)), useManyCoinsOnBush);
+		steps.addStep(new ZoneRequirement(new WorldPoint(3221, 3215, 0)), highlightBushWorldPoint);
+		steps.addStep(new ZoneRequirement(new WorldPoint(3221, 3216, 0)), highlightBushNoWorldPoint);
+		steps.addStep(new ZoneRequirement(new WorldPoint(3221, 3217, 0)), highlightBushShowAllInArea);
 		steps.addStep(new ZoneRequirement(new WorldPoint(3224, 3216, 0)), getCoins);
 		steps.addStep(conditionalRequirementZoneRequirement, conditionalRequirementLookAtCoins);
 		steps.addStep(new ZoneRequirement(new WorldPoint(3224, 3221, 0)), lookAtCooksAssistant);
@@ -230,6 +237,10 @@ public class BikeShedder extends BasicQuestHelper
 		useManyCoinsOnBush = new ObjectStep(this, ObjectID.PVPW_ARMOURSTAND_BUSH, new WorldPoint(3223, 3217, 0), "Use many coins on the bush.", manyCoins);
 		useManyCoinsOnBush.addIcon(ItemID.COINS);
 
+		highlightBushWorldPoint = new ObjectStep(this, ObjectID.PVPW_ARMOURSTAND_BUSH, new WorldPoint(3223, 3217, 0), "The bush should be highlighted (ObjectStep with world point only).");
+		highlightBushNoWorldPoint = new ObjectStep(this, ObjectID.PVPW_ARMOURSTAND_BUSH, "The bush should be highlighted (ObjectStep with no world point).");
+		highlightBushShowAllInArea = new ObjectStep(this, ObjectID.PVPW_ARMOURSTAND_BUSH, new WorldPoint(3223, 3217, 0), "The bush should be highlighted (ObjectStep with showAllInArea).", true);
+
 		conditionalRequirementZone = new Zone(new WorldPoint(3223, 3221, 0), new WorldPoint(3223, 3223, 0));
 		conditionalRequirementZoneRequirement = new ZoneRequirement(conditionalRequirementZone);
 		conditionalRequirementZoneSouthRequirement = new ZoneRequirement(new WorldPoint(3223, 3221, 0));
@@ -251,7 +262,9 @@ public class BikeShedder extends BasicQuestHelper
 		lookAtCooksAssistantRequirement.setDisplayText("Cook's Assistant quest journal open");
 		lookAtCooksAssistantTextRequirement = new WidgetTextRequirement(InterfaceID.Questjournal.TEXTLAYER, true, "he now lets me use his high quality range");
 		lookAtCooksAssistantTextRequirement.setDisplayText("Cook's Assistant quest journal open & received reward (checking text)");
-		lookAtCooksAssistant = new DetailedQuestStep(this, "Open the Cook's Assistant quest journal. You must have started the quest for this test to work.", lookAtCooksAssistantRequirement, lookAtCooksAssistantTextRequirement);
+		lookAtCooksAssistantTextFinishedRequirement = new WidgetTextRequirement(InterfaceID.Questjournal.TEXTLAYER, true, "<str>As a reward he now lets me use his high quality range");
+		lookAtCooksAssistantTextFinishedRequirement.setDisplayText("Cook's Assistant quest journal open & received reward (checking text & tag)");
+		lookAtCooksAssistant = new DetailedQuestStep(this, "Open the Cook's Assistant quest journal. You must have started the quest for this test to work.", lookAtCooksAssistantRequirement, lookAtCooksAssistantTextRequirement, lookAtCooksAssistantTextFinishedRequirement);
 
 		var upstairsInSunrisePalace = new Zone(new WorldPoint(1684, 3162, 1), new WorldPoint(1691, 3168, 1));
 		byStaircaseInSunrisePalace = new ZoneRequirement(upstairsInSunrisePalace);
@@ -356,9 +369,11 @@ public class BikeShedder extends BasicQuestHelper
 		panels.add(new PanelDetails("Equip Lightbearer", List.of(equipLightbearer), List.of(lightbearer)));
 		panels.add(new PanelDetails("Use log on mysterious bush", List.of(useLogOnBush), List.of(anyLog)));
 		panels.add(new PanelDetails("Use coins on mysterious bush", List.of(useCoinOnBush, useManyCoinsOnBush), List.of(oneCoin, manyCoins)));
+		panels.add(new PanelDetails("Highlight mysterious bush with a world point", List.of(highlightBushWorldPoint)));
+		panels.add(new PanelDetails("Highlight mysterious bush without a single tile", List.of(highlightBushNoWorldPoint, highlightBushShowAllInArea)));
 		panels.add(new PanelDetails("Conditional requirement", List.of(conditionalRequirementLookAtCoins), List.of(conditionalRequirementCoins, conditionalRequirementGoldBar)));
 		panels.add(new PanelDetails("Item step", List.of(getCoins), List.of(anyCoins)));
-		panels.add(new PanelDetails("Quest state", List.of(lookAtCooksAssistant), List.of(lookAtCooksAssistantRequirement, lookAtCooksAssistantTextRequirement)));
+		panels.add(new PanelDetails("Quest state", List.of(lookAtCooksAssistant), List.of(lookAtCooksAssistantRequirement, lookAtCooksAssistantTextRequirement, lookAtCooksAssistantTextFinishedRequirement)));
 		panels.add(new PanelDetails("Ensure staircase upstairs in Sunrise Palace is highlighted", List.of(goDownstairsInSunrisePalace), List.of()));
 		panels.add(new PanelDetails("Sailing", List.of(talkToNpcOnBoat, talkToKlarenceFromShip, useSalvagingHook, useObjectOffBoat), List.of()));
 		panels.add(new PanelDetails("Key ring", List.of(keyringStep), List.of(dustyKeyItem, dustyKeyKeyRing)));
